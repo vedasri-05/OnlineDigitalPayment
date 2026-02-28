@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - Join Our Team</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #2c3e50;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            color: #2980b9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+
+        /* Career Options Styling */
+        .career-options {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .career-options h2 {
+            font-size: 30px;
+            color: #e74c3c;
+            border-bottom: 3px solid #e74c3c;
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Job List Styling */
+        .job-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Job Item Styling */
+        .job-item {
+            background-color: #ecf0f1;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Hover effect for job items */
+        .job-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .job-item h3 {
+            font-size: 24px;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+
+        .job-item p {
+            font-size: 16px;
+            color: #95a5a6;
+            width: 70%;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 30px;
+            }
+
+            .job-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .job-item h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Careers</h1>
+            <p>Join our team and help us make bill payments easier and more efficient for everyone!</p>
+        </div>
+
+        <div class="career-options">
+            <h2>Explore Career Opportunities</h2>
+        </div>
+
+        <ul class="job-list">
+            <li class="job-item">
+                <div>
+                    <h3>Software Engineer</h3>
+                    <p>Develop innovative payment solutions for electricity billing systems.</p>
+                </div>
+            </li>
+
+            <li class="job-item">
+                <div>
+                    <h3>UI/UX Designer</h3>
+                    <p>Design and improve the user experience of our platform to be intuitive and user-friendly.</p>
+                </div>
+            </li>
+
+            <li class="job-item">
+                <div>
+                    <h3>Customer Support Specialist</h3>
+                    <p>Provide outstanding customer support and assistance for our users.</p>
+                </div>
+            </li>
+
+            <li class="job-item">
+                <div>
+                    <h3>Security Analyst</h3>
+                    <p>Ensure the security and integrity of our payment systems, protecting user data.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <footer>
+        &copy; 2025 Electricity Bill Payment. All rights reserved.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="home.css">
+    
+</head>
+
+
+<body>
+      <!-- First Flex Container (Navigation) -->
+       <div>
+     
+       </div>
+    <div class="flex-cont">
+       
+        <div><a href="careers.html">Career</div>
+        <div><a href="review.html">Reviews</div>
+        <div><a href="aboutUs.html">AboutUs</div>
+        <div><a href="contactUs.html">contactUs</div>
+        
+        <div><a href="signin.html" >Sign Out</a></div>
+    </div>
+
+    <!-- Second Flex Container (First Row of Services) -->
+    <div class="flex-container">
+        <div><a href="recharge.html"><img src="1626251017535.png" alt="Recharge"></a><br>Recharge</div>
+        <div><a href="ELECTRICITY BILL.html"><img src="1626251043534.png" alt="Electricity Bill"></a><br>Electricity Bill</div>
+        <div><a href="dth.html"><img src="1626251101045.png" alt="DTH Recharge"></a><br>DTH Recharge</div>
+        <div><a href="gasbooking.html">
+            <img src="1626251127863.png" alt="Book Gas Cylinder"></a><br>Book Gas Cylinder</div>
+    </div>
+
+    
+    <div class="flex-container">
+        
+            <div><a href="HTML1.html"><img src="1626259710574.png" alt="Movie Tickets" width="140"></a><br>Movie Tickets</div>
+            <div><a href="MOBILE TRANSFER UPI.html"><img src="1672827522093.png" alt="Mobile Transfer" width="140"></a><br>Mobile Transfer</div>
+            <div><a href="FAST TAG.html"><img src="fastag.png" alt="Fast tag" width="140"></a><br>Fast Tag</div>
+            <div><a href="educationalfee.html"><img src="educational.png" alt="Education fees" width="140"></a><br>Pay Education Fee</div>
+        
+    </div>
+    
+    <div class="scroller-container">
+        <div class="scroller">
+            <div class="slides">
+                <!-- Using placeholder images from Unsplash -->
+                <img class="slide" src="movie4slide.avif" alt="Slide 1">
+                <img class="slide" src="online2slide.jpg" alt="Slide 2">
+                <img class="slide" src="secure3slide.avif" alt="Slide 3">
+                <img class="slide" src="review2slide.jpg" alt="Slide 4">
+            </div>
+        </div>
+        <div class="dots"></div>
+    </div>
+    <div class="flex-cont">
+        <div>
+            <h1>SIMPLE FAST AND SECURE</h1><br><P><h3>One app for all purposes</h3><p>Pay bills, recharge, send money, buy gold, invest and shop at your favourite stores.</p><br><hr><br>
+                <h3>Pay whenever you like whereever you like</h3><p>Choose from options like UPI, the PhonePe wallet or your Debit and Credit Card.</p><br><hr><br><h3>pay secure</h3><p>All types of payments can be done securly</p><br>
+
+                
+        </div>
+        <div><img src="sales.png" alt="sales" width="700px" height="700px"></div>
+    </div>
+    
+    <script>
+        const scroller = document.querySelector('.scroller');
+        const slides = document.querySelector('.slides');
+        const dotsContainer = document.querySelector('.dots');
+        const slideCount = document.querySelectorAll('.slide').length;
+        let currentIndex = 0;
+
+        // Create dots dynamically
+        for (let i = 0; i < slideCount; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        const dots = document.querySelectorAll('.dot');
+
+        function goToSlide(index) {
+            if (index < 0 || index >= slideCount) return;
+            
+            currentIndex = index;
+            const slideWidth = scroller.offsetWidth;
+            slides.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+
+
+            // Update active dot
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // Optional: Auto-scroll every 5 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % slideCount;
+            goToSlide(currentIndex);
+        }, 5000);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            goToSlide(currentIndex);
+        });
+    </script>
+    
+</body>
+</html>

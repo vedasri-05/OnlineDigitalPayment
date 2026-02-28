@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Fee</title>
+    <link rel="stylesheet" href="CSS1.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            font-size: larger;
+        }
+        h1 {
+            text-align: center;
+            color: #ffdd57;
+            font-size: 28px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: black;
+            background-color: white;
+            outline: none;
+        }
+        #proceedButton {
+            display: block;
+            width: 100%;
+            background-color: #ffdd57;
+            color: #333;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #proceedButton:hover {
+            background-color: #ffcc00;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+    <style>
+        .back-arrow {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <a href="home.html" class="back-arrow">&#8592;</a>
+    <div class="container">
+        <h1>Educational Fee</h1>
+        <form id="feeForm">
+            <label for="state">Select State:</label>
+            <select id="state" onchange="populateDistricts()">
+                <option value="">--Select State--</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Maharashtra">Maharashtra</option>
+            </select>
+            <span class="error" id="stateError">State is required!</span>
+            
+            <label for="district">Select District:</label>
+            <select id="district" onchange="populateInstitutions()">
+                <option value="">--Select District--</option>
+            </select>
+            <span class="error" id="districtError">District is required!</span>
+            
+            <label for="institution">Select Institution:</label>
+            <select id="institution">
+                <option value="">--Select Institution--</option>
+            </select>
+            <span class="error" id="institutionError">Institution is required!</span>
+             
+            <label for="universityNumber">University Number:</label>
+            <input type="text" id="universityNumber" placeholder="Enter your university number">
+            <span class="error" id="universityError">University Number is required!</span>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount" min="1">
+            <span class="error" id="amountError">Amount is required</span>
+            
+            <button type="button" id="proceedButton" onclick="proceed()">Proceed</button>
+        </form>
+    </div>
+    
+    <script>
+        const districtsByState = {
+            "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Trichy", "Salem"],
+            "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Tirupati"],
+            "Karnataka": ["Bangalore", "Mysore", "Hubli"],
+            "Maharashtra": ["Mumbai", "Pune", "Nagpur"]
+        };
+        
+        const institutionsByDistrict = {
+            "Chennai": ["Anna University", "IIT Madras", "SRM University"],
+            "Coimbatore": ["PSG College of Technology", "Karunya University","Amrita University"],
+            "Madurai": ["Madurai Kamaraj University", "Thiagarajar College of Engineering"],
+            "Trichy": ["NIT Trichy", "Bishop Heber College"],
+            "Salem": ["Vinayaka Mission University", "Periyar University"],
+            "Visakhapatnam": ["Andhra University", "GITAM University"],
+            "Vijayawada": ["KL University", "VIT-AP"],
+            "Tirupati": ["Sri Venkateswara University"],
+            "Bangalore": ["IISc Bangalore", "Christ University"],
+            "Mysore": ["University of Mysore", "JSS Science and Technology University"],
+            "Hubli": ["KLE Technological University"],
+            "Mumbai": ["IIT Bombay", "Mumbai University"],
+            "Pune": ["Savitribai Phule Pune University", "MIT Pune"],
+            "Nagpur": ["VNIT Nagpur", "RTM Nagpur University"]
+        };
+
+        function populateDistricts() {
+            const state = document.getElementById("state").value;
+            const districtSelect = document.getElementById("district");
+            districtSelect.innerHTML = "<option value=''>--Select District--</option>";
+            
+            if (state && districtsByState[state]) {
+                districtsByState[state].forEach(district => {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        function populateInstitutions() {
+            const district = document.getElementById("district").value;
+            const institutionSelect = document.getElementById("institution");
+            institutionSelect.innerHTML = "<option value=''>--Select Institution--</option>";
+            
+            if (district && institutionsByDistrict[district]) {
+                institutionsByDistrict[district].forEach(institution => {
+                    const option = document.createElement("option");
+                    option.value = institution;
+                    option.textContent = institution;
+                    institutionSelect.appendChild(option);
+                });
+            }
+        }
+
+        function proceed() {
+            const state = document.getElementById("state").value;
+            const district = document.getElementById("district").value;
+            const institution = document.getElementById("institution").value;
+            const universityNumber = document.getElementById("universityNumber").value.trim();
+            const amount = document.getElementById("amount").value.trim();
+
+            let valid = true;
+
+            if (!state) {
+                document.getElementById("stateError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("stateError").style.display = "none";
+            }
+
+            if (!district) {
+                document.getElementById("districtError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("districtError").style.display = "none";
+            }
+
+            if (!institution) {
+                document.getElementById("institutionError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("institutionError").style.display = "none";
+            }
+
+            if (!universityNumber) {
+                document.getElementById("universityError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("universityError").style.display = "none";
+            }
+
+            if (!amount || isNaN(amount) || Number(amount) < 1) {
+                document.getElementById("amountError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("amountError").style.display = "none";
+            }
+
+            if (valid) {
+                window.location.href='payment.html'
+            }
+        }
+    </script>
+</body>
+</html>

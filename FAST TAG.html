@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FASTag Payment Interface</title>
+  <style>
+    body {
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('fastag1.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
+      max-width: 420px;
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      color: #00ffcc;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    button {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    .terms {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .terms input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .terms label {
+      font-size: 14px;
+    }
+
+    .terms a {
+      color: #5edfff;
+      text-decoration: underline;
+    }
+
+    .error {
+      color: #ff7b7b;
+      font-size: 13px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    button {
+      background-color: #00b894;
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #fd7e14;
+    }
+
+    #paymentStatus {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #00e6e6;
+    }
+
+    .highlight {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 800px;
+      color: #f2f2f2;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="highlight">
+    FASTag uses RFID tech for automatic toll payments. It ensures seamless travel, reduces fuel consumption, and connects directly to your bank account.
+  </p>
+
+  <div class="container">
+    <h1>FASTag Payment</h1>
+    <form id="paymentForm">
+      <label for="Name">Name:</label>
+      <input type="text" id="Name" name="Name">
+      <span class="error" id="nameError">Name is required!</span>
+
+      <label for="vehicleNumber">Vehicle Number:</label>
+      <input type="text" id="vehicleNumber" name="vehicleNumber">
+      <span class="error" id="vehicleError">Vehicle Number is required!</span>
+
+      <label for="FASTagId">FASTag ID:</label>
+      <input type="text" id="FASTagId" name="FASTagId">
+      <span class="error" id="fastagError">FASTag ID is required!</span>
+
+      <label for="amount">Amount (₹):</label>
+      <input type="number" id="amount" name="amount" min="1">
+      <span class="error" id="amountError">Enter a valid amount!</span>
+
+      <div class="terms">
+        <input type="checkbox" id="termsCheckbox">
+        <label for="termsCheckbox">
+          I agree to the <a href="#">Terms and Conditions</a>
+        </label>
+      </div>
+      <span class="error" id="termsError">You must agree to the terms!</span>
+
+      <button type="button" onclick="validateForm()">Pay Now</button>
+    </form>
+    <p id="paymentStatus"></p>
+  </div>
+
+  <script>
+    function validateForm() {
+      let valid = true;
+
+      const name = document.getElementById("Name").value.trim();
+      const vehicle = document.getElementById("vehicleNumber").value.trim();
+      const fastag = document.getElementById("FASTagId").value.trim();
+      const amount = parseFloat(document.getElementById("amount").value);
+      const terms = document.getElementById("termsCheckbox").checked;
+
+      // Reset errors
+      document.querySelectorAll('.error').forEach(el => el.style.display = 'none');
+
+      if (name === "") {
+        document.getElementById("nameError").style.display = "block";
+        valid = false;
+      }
+
+      if (vehicle === "") {
+        document.getElementById("vehicleError").style.display = "block";
+        valid = false;
+      }
+
+      if (fastag === "") {
+        document.getElementById("fastagError").style.display = "block";
+        valid = false;
+      }
+
+      if (isNaN(amount) || amount <= 0) {
+        document.getElementById("amountError").style.display = "block";
+        valid = false;
+      }
+
+      if (!terms) {
+        document.getElementById("termsError").style.display = "block";
+        valid = false;
+      }
+
+      if (valid) {
+        document.getElementById("paymentStatus").innerText = "Redirecting to payment...";
+        setTimeout(() => {
+          window.location.href = "payment.html";
+        }, 1000);
+      }
+    }
+  </script>
+</body>
+</html>

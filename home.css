@@ -1,0 +1,139 @@
+/* Flex container styling */
+.flex-container {
+    display: flex;
+    justify-content: space-evenly; /* Space items evenly */
+    align-items: center; /* Align items vertically */
+    flex-wrap: wrap; /* Wrap items if needed */
+    padding: 15px;
+    margin-bottom: 15px; /* Space between rows */
+    border-radius: 20px; /* Rounded corners */
+    background-color: rgb(58, 51, 113);
+    color: aliceblue;
+    font-family: "Poppins", sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and shadow */
+}
+
+.flex-container:hover {
+    transform: scale(1.05); /* Scale up on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+/* Flex item styling */
+.flex-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for transform and opacity */
+}
+hr {
+    border: none;
+    border-top: 1px solid #000; /* Change color to black or desired shade */
+    width: 100%; /* Adjust width if needed */
+}
+.flex-cont:hover {
+    transform: translateY(-5px); /* Move up slightly on hover */
+    opacity: 0.9; /* Reduce opacity on hover */
+}
+
+/* Image styling */
+.image img {
+    border-radius: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for image scaling and shadow */
+}
+
+.image img:hover {
+    transform: scale(1.1); /* Scale up on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+.flex-con{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: larger; /* Adjust spacing */}
+/* Flex Container for SignOut section */
+.flex-cont {
+    display: flex;
+    justify-content: space-evenly; /* Space items evenly */
+    align-items: center; /* Align items vertically */
+    flex-wrap: wrap; /* Wrap items if needed */
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 20px; /* Rounded corners */
+    background-color: rgb(176, 172, 215);
+    color: rgb(58, 51, 113);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 19px;
+    height: 80px;
+    flex-wrap: 1;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.flex-cont:hover {
+    transform: translateY(-5px); /* Slight move up on hover */
+    background-color: rgb(150, 145, 180); /* Darken background color on hover */
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.scroller-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.scroller {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 18px;
+    height: 13px;
+    background: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background: #333;
+}
+.flex-con{
+    display:flex;
+    justify-content: space-evenly; /* Space items evenly */
+    align-items: center; /* Align items vertically */
+    flex-wrap: wrap; /* Wrap items if needed */
+    padding: 15px;
+    align-items: center;
+    width:10px
+
+}
+

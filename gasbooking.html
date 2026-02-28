@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Booking Online</title>
+    <link rel="stylesheet" href="gas.css">
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            let name = document.getElementById("name").value.trim();
+            let mobile = document.getElementById("mobile").value.trim();
+            let address = document.getElementById("address").value.trim();
+            let mobilePattern = /^[0-9]{10}$/;
+            let valid = true;
+
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+            if (name === "") {
+                document.getElementById("nameError").textContent = "Name cannot be empty";
+                valid = false;
+            }
+            if (!mobilePattern.test(mobile)) {
+                document.getElementById("mobileError").textContent = "Enter a valid 10-digit mobile number";
+                valid = false;
+            }
+            if (address === "") {
+                document.getElementById("addressError").textContent = "Address cannot be empty";
+                valid = false;
+            }
+            
+            if (valid) {
+              alert("Thanks for choosing");
+              window.location.href = "payment.html";
+}
+        }
+    </script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>SSG Gas Booking Form</h2>
+            <form onsubmit="validateForm(event)">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" placeholder="Enter your name">
+                <p class="error" id="nameError"></p>
+                
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" placeholder="Enter your mobile number">
+                <p class="error" id="mobileError"></p>
+                
+                <label for="address">Address:</label>
+                <input type="text" id="address" placeholder="Enter your address">
+                <p class="error" id="addressError"></p>
+                
+                <h3>Select Your Plan:</h3>
+                <select id="plan">
+                    <option value="basic">Basic Plan - ₹850 per cylinder</option>
+                    <option value="standard">Standard Plan - ₹900 per cylinder</option>
+                    <option value="premium">Premium Plan - ₹950 per cylinder</option>
+                </select>
+                
+                <button type="submit">Book Now</button>
+            </form>
+    
+            <h3>Other Gas Providers</h3>
+            <ul class="gas-providers">
+                <li><a href="https://indane.co.in/" target="_blank">Indane Gas</a></li>
+                <li><a href="https://myhpgas.in/" target="_blank">HP Gas</a></li>
+                <li><a href="https://www.bharatpetroleum.in/LPG-Home.aspx" target="_blank">Bharat Gas</a></li>
+                <li><a href="https://www.jiobp.com/" target="_blank">Jio BP Gas</a></li>
+            </ul>
+        </div>
+    </body>
+    </html>
+    

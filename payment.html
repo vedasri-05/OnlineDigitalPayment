@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment Gateway</title>
+    <link rel="stylesheet" href="payment.css">
+    <style>
+        .back-arrow {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <a href="home.html" class="back-arrow">&#8592;</a>
+    <div class="payment-container">
+        <h2>PAYMENT OPTIONS</h2>
+        <form id="paymentForm" novalidate >
+            <div class="form-group">
+                <label for="payment_method">Payment Method:</label>
+                <select id="payment_method" name="payment_method" required>
+                    <option value="">Select payment method</option>
+                    <option value="credit_card">Credit Card</option>
+                    <option value="debit_card">Debit Card</option>
+                    <option value="digital_wallet">Digital Wallet</option>
+                    <option value="upi">UPI Payment</option>
+                </select>
+                <div id="paymentMethodError" class="error-message">Please select a payment method</div>
+            </div>
+
+            <!-- Card Payment Fields -->
+            <div class="card-fields" id="card-details">
+                <div class="card-icons">
+                    <div class="card-icon">VISA</div>
+                    <div class="card-icon">MC</div>
+                    <div class="card-icon">AMEX</div>
+                    <div class="card-icon">RUPAY</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="card_number">Card Number:</label>
+                    <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19">
+                    <div id="cardNumberError" class="error-message">Please enter a valid 16-digit card number</div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1; margin-right: 15px;">
+                        <label for="expiry_date">Expiry Date:</label>
+                        <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY" maxlength="5">
+                        <div id="expiryDateError" class="error-message">Please enter a valid expiry date (MM/YY)</div>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label for="cvv">CVV:</label>
+                        <input type="password" id="cvv" name="cvv" placeholder="123" maxlength="4">
+                        <div id="cvvError" class="error-message">Please enter a valid CVV (3-4 digits)</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="card_holder">Card Holder Name:</label>
+                    <input type="text" id="card_holder" name="card_holder" placeholder="Name on card">
+                    <div id="cardHolderError" class="error-message">Please enter card holder name</div>
+                </div>
+            </div>
+
+            <!-- UPI/Wallet Payment Fields -->
+            <div class="wallet-fields" id="wallet-details">
+                <div class="form-group">
+                    <label for="upi_id">UPI ID:</label>
+                    <input type="text" id="upi_id" name="upi_id" placeholder="yourname@upi">
+                    <div id="upiIdError" class="error-message">Please enter a valid UPI ID (e.g., name@upi)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upi_pin">UPI PIN:</label>
+                    <input type="password" id="upi_pin" name="upi_pin" placeholder="••••••" maxlength="6">
+                    <div id="upiPinError" class="error-message">Please enter a 6-digit UPI PIN</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+            <button type="button" class="btn btn-secondary" id="backBtn">Change Payment Method</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('paymentForm');
+            const paymentMethod = document.getElementById('payment_method');
+            const cardFields = document.getElementById('card-details');
+            const walletFields = document.getElementById('wallet-details');
+            const backBtn = document.getElementById('backBtn');
+            
+            // Toggle payment method fields
+            paymentMethod.addEventListener('change', function() {
+                const value = this.value;
+                
+                // Hide all fields first
+                cardFields.style.display = 'none';
+                walletFields.style.display = 'none';
+                backBtn.style.display = 'none';
+                
+                // Show relevant fields
+                if (value === 'credit_card' || value === 'debit_card') {
+                    cardFields.style.display = 'block';
+                    backBtn.style.display = 'block';
+                } else if (value === 'upi' || value === 'digital_wallet') {
+                    walletFields.style.display = 'block';
+                    backBtn.style.display = 'block';
+                }
+                
+                // Clear all errors when changing payment method
+                clearErrors();
+            });
+            
+            // Back button functionality
+            backBtn.addEventListener('click', function() {
+                paymentMethod.value = '';
+                cardFields.style.display = 'none';
+                walletFields.style.display = 'none';
+                this.style.display = 'none';
+                clearErrors();
+            });
+            
+            // Card number formatting
+            const cardNumber = document.getElementById('card_number');
+            cardNumber.addEventListener('input', function(e) {
+                // Remove all non-digit characters
+                let value = this.value.replace(/\D/g, '');
+                
+                // Add space after every 4 digits
+                value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                
+                // Update the input value
+                this.value = value;
+                
+                // Validate as user types
+                validateCardNumber();
+            });
+            
+            // Expiry date formatting
+            const expiryDate = document.getElementById('expiry_date');
+            expiryDate.addEventListener('input', function(e) {
+                let value = this.value.replace(/\D/g, '');
+                
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                
+                this.value = value;
+                validateExpiryDate();
+            });
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    // Form is valid - proceed with payment
+                    window.location.href='success.html';
+                    // form.submit(); // Uncomment to actually submit the form
+                }
+            });
+            
+            // Validation functions
+            function validateForm() {
+                let isValid = true;
+                const paymentValue = paymentMethod.value;
+                
+                // Validate payment method
+                if (!paymentValue) {
+                    showError('paymentMethodError', 'Please select a payment method');
+                    isValid = false;
+                } else {
+                    hideError('paymentMethodError');
+                }
+                
+                // Validate card fields if card payment
+                if (paymentValue === 'credit_card' || paymentValue === 'debit_card') {
+                    if (!validateCardNumber()) isValid = false;
+                    if (!validateExpiryDate()) isValid = false;
+                    if (!validateCVV()) isValid = false;
+                    if (!validateCardHolder()) isValid = false;
+                }
+                
+                // Validate UPI fields if UPI payment
+                if (paymentValue === 'upi' || paymentValue === 'digital_wallet') {
+                    if (!validateUpiId()) isValid = false;
+                    if (!validateUpiPin()) isValid = false;
+                }
+                
+                return isValid;
+            }
+            
+            function validateCardNumber() {
+                const value = cardNumber.value.replace(/\s/g, '');
+                const errorElement = document.getElementById('cardNumberError');
+                
+                if (!value) {
+                    showError(errorElement, 'Card number is required');
+                    cardNumber.classList.add('error');
+                    cardNumber.classList.remove('valid');
+                    return false;
+                }
+                
+                // Basic Luhn algorithm check
+                if (!luhnCheck(value) || value.length !== 16) {
+                    showError(errorElement, 'Please enter a valid 16-digit card number');
+                    cardNumber.classList.add('error');
+                    cardNumber.classList.remove('valid');
+                    return false;
+                }
+                
+                hideError(errorElement);
+                cardNumber.classList.remove('error');
+                cardNumber.classList.add('valid');
+                return true;
+            }
+            
+            function validateExpiryDate() {
+                const value = expiryDate.value;
+                const errorElement = document.getElementById('expiryDateError');
+                
+                if (!value) {
+                    showError(errorElement, 'Expiry date is required');
+                    expiryDate.classList.add('error');
+                    expiryDate.classList.remove('valid');
+                    return false;
+                }
+                
+                const parts = value.split('/');
+                if (parts.length !== 2 || parts[0].length !== 2 || parts[1].length !== 2) {
+                    showError(errorElement, 'Please enter date in MM/YY format');
+                    expiryDate.classList.add('error');
+                    expiryDate.classList.remove('valid');
+                    return false;
+                }
+                
+                const month = parseInt(parts[0]);
+                const year = parseInt(parts[1]);
+                const currentYear = new Date().getFullYear() % 100;
+                const currentMonth = new Date().getMonth() + 1;
+                
+                if (month < 1 || month > 12) {
+                    showError(errorElement, 'Please enter a valid month (01-12)');
+                    expiryDate.classList.add('error');
+                    expiryDate.classList.remove('valid');
+                    return false;
+                }
+                
+                if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                    showError(errorElement, 'Card has expired');
+                    expiryDate.classList.add('error');
+                    expiryDate.classList.remove('valid');
+                    return false;
+                }
+                
+                hideError(errorElement);
+                expiryDate.classList.remove('error');
+                expiryDate.classList.add('valid');
+                return true;
+            }
+            
+            function validateCVV() {
+                const cvv = document.getElementById('cvv');
+                const value = cvv.value;
+                const errorElement = document.getElementById('cvvError');
+                
+                if (!value) {
+                    showError(errorElement, 'CVV is required');
+                    cvv.classList.add('error');
+                    cvv.classList.remove('valid');
+                    return false;
+                }
+                
+                if (!/^\d{3,4}$/.test(value)) {
+                    showError(errorElement, 'Please enter a valid CVV (3-4 digits)');
+                    cvv.classList.add('error');
+                    cvv.classList.remove('valid');
+                    return false;
+                }
+                
+                hideError(errorElement);
+                cvv.classList.remove('error');
+                cvv.classList.add('valid');
+                return true;
+            }
+            
+            function validateCardHolder() {
+                const cardHolder = document.getElementById('card_holder');
+                const value = cardHolder.value.trim();
+                const errorElement = document.getElementById('cardHolderError');
+                
+                if (!value) {
+                    showError(errorElement, 'Card holder name is required');
+                    cardHolder.classList.add('error');
+                    cardHolder.classList.remove('valid');
+                    return false;
+                }
+                
+                if (value.length < 3) {
+                    showError(errorElement, 'Name is too short');
+                    cardHolder.classList.add('error');
+                    cardHolder.classList.remove('valid');
+                    return false;
+                }
+                
+                hideError(errorElement);
+                cardHolder.classList.remove('error');
+                cardHolder.classList.add('valid');
+                return true;
+            }
+            
+            function validateUpiId() {
+                const upiId = document.getElementById('upi_id');
+                const value = upiId.value.trim();
+                const errorElement = document.getElementById('upiIdError');
+                
+                if (!value) {
+                    showError(errorElement, 'UPI ID is required');
+                    upiId.classList.add('error');
+                    upiId.classList.remove('valid');
+                    return false;
+                }
+                
+                if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+$/.test(value)) {
+                    showError(errorElement, 'Please enter a valid UPI ID (e.g., name@upi)');
+                    upiId.classList.add('error');
+                    upiId.classList.remove('valid');
+                    return false;
+                }
+                
+                hideError(errorElement);
+                upiId.classList.remove('error');
+                upiId.classList.add('valid');
+                return true;
+            }
+            
+            function validateUpiPin() {
+                const upiPin = document.getElementById('upi_pin');
+                const value = upiPin.value;
+                const errorElement = document.getElementById('upiPinError');
+                
+                if (!value) {
+                    showError(errorElement, 'UPI PIN is required');
+                    upiPin.classList.add('error');
+                    upiPin.classList.remove('valid');
+                    return false;
+                }
+                
+                if (!/^\d{6}$/.test(value)) {
+                    showError(errorElement, 'UPI PIN must be 6 digits');
+                    upiPin.classList.add('error');
+                    upiPin.classList.remove('valid');
+                    return false;
+                }
+                
+                hideError(errorElement);
+                upiPin.classList.remove('error');
+                upiPin.classList.add('valid');
+                return true;
+            }
+            
+            // Helper functions
+            function showError(elementId, message) {
+                const element = typeof elementId === 'string' ? document.getElementById(elementId) : elementId;
+                element.textContent = message;
+                element.style.display = 'block';
+            }
+            
+            function hideError(elementId) {
+                const element = typeof elementId === 'string' ? document.getElementById(elementId) : elementId;
+                element.style.display = 'none';
+            }
+            
+            function clearErrors() {
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                document.querySelectorAll('input, select').forEach(el => {
+                    el.classList.remove('error', 'valid');
+                });
+            }
+            
+            // Luhn algorithm for card validation
+            function luhnCheck(cardNum) {
+                let sum = 0;
+                let shouldDouble = false;
+                
+                for (let i = cardNum.length - 1; i >= 0; i--) {
+                    let digit = parseInt(cardNum.charAt(i));
+                    
+                    if (shouldDouble) {
+                        digit *= 2;
+                        if (digit > 9) {
+                            digit -= 9;
+                        }
+                    }
+                    
+                    sum += digit;
+                    shouldDouble = !shouldDouble;
+                }
+                
+                return (sum % 10) === 0;
+            }
+        });
+    </script>
+</body>
+</html>

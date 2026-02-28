@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Transfer - UPI Payment</title>
+
+    <style>
+        /* Global Styles */
+        body {
+            background-image: linear-gradient(to right, #010b0e, #2b4360);
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 100%;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        button {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="password"]:focus {
+            border-color: #00c6ff;
+            box-shadow: 0 0 8px rgba(0, 198, 255, 0.5);
+        }
+
+        button {
+            padding: 14px;
+            background-color: #051024;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: #da2b0c;
+            transform: translateY(-3px);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+        }
+
+        button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #paymentStatus {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #06d135;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: #f44336; /* Red color for error text */
+            font-size: 0.9em;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* For mobile responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            button {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mobile Transfer - UPI Payment</h1>
+        <form id="paymentForm">
+            <label for="mobileNumber">Mobile Number:</label>
+            <input type="text" id="mobileNumber" name="mobileNumber" placeholder="Enter mobile number">
+            <div id="mobileError" class="error-message"></div>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount"  placeholder="Enter amount" min="1">
+            <div id="amountError" class="error-message"></div>
+            <label for="upiPin">UPI PIN:</label>
+            <input type="password" id="upiPin" name="upiPin"  placeholder="Enter UPI PIN" maxlength="6">
+            <div id="upiPinError" class="error-message"></div>
+
+            <button type="submit" id="proceedButton">Transfer Now</button>
+        </form>
+
+        <div id="paymentStatus"></div>
+    </div>
+
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Reset errors
+            document.getElementById("mobileError").innerText = "";
+            document.getElementById("amountError").innerText = "";
+            document.getElementById("upiPinError").innerText = "";
+
+            let mobileNumber = document.getElementById('mobileNumber').value;
+            let amount = document.getElementById('amount').value;
+            let upiPin = document.getElementById('upiPin').value;
+
+            let valid = true;
+
+            // Validate Mobile Number
+            if (!mobileNumber || !/^\d{10}$/.test(mobileNumber)) {
+                document.getElementById('mobileError').innerText = "Please enter a valid 10-digit mobile number.";
+                valid = false;
+            }
+
+            // Validate Amount
+            if (!amount || amount <= 0) {
+                document.getElementById('amountError').innerText = "Please enter a valid amount.";
+                valid = false;
+            }
+
+            // Validate UPI PIN (6-digit)
+            if (!/^\d{6}$/.test(upiPin)) {
+                document.getElementById('upiPinError').innerText = "Please enter a valid 6-digit UPI PIN.";
+                valid = false;
+            }
+
+            if (valid) {
+                // Simulate transfer success after 2 seconds
+                setTimeout(function() {
+                    document.getElementById('paymentStatus').innerText = `Transfer successful to ${mobileNumber}. Amount: ₹${amount}`;
+                    document.getElementById('paymentStatus').style.opacity = 1;
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

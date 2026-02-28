@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Listings</title>
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            text-align: center; 
+            background-color: #121212; 
+            color: #fff;
+            margin: 0; 
+            padding: 0; 
+        }
+        .container { 
+            width: 90%; 
+            max-width: 1000px; 
+            margin: 20px auto; 
+            background: #1e1e1e; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+        h2 {
+            color: #ffcc00;
+        }
+        .category {
+            margin-bottom: 30px;
+        }
+
+        .movies {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .movie {
+            padding: 15px;
+            border-radius: 15px;
+            background: #292929;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .movie:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.5);
+        }
+        img { 
+            width: 70%; 
+            height: auto; 
+            border-radius: 10px;
+        }
+        p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        .info-section {
+            margin: 40px auto;
+            padding: 20px;
+            background: #252525;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+        .info-section p {
+            color: #ddd;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: auto;
+        }
+        .review-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #222;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+        .reviews {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .review {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            width: 180px;
+            transition: transform 0.3s;
+        }
+        .review:hover {
+            transform: scale(1.1);
+        }
+        .review img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .review span {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+    </style>
+    <script>
+        function bookSeats() {
+            window.location.href = 'Seats booking.html';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Available Movies</h2>
+        
+        <div class="category">
+            <h3>Telugu Movies</h3>
+            <div class="movies">
+                <div class="movie" onclick="bookSeats()"><img src="pushpa.png " alt="Pushpa: The Rise" width="50" height="50"><p>Pushpa: The Rise</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="RRR.png" alt="RRR"><p>RRR</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="bahubali2.png" alt="Baahubali 2"><p>Baahubali 2</p></div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Tamil Movies</h3>
+            <div class="movies">
+                <div class="movie" onclick="bookSeats()"><img src="vikram.png" alt="Vikram"><p>Vikram</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="ponniyanselvan.png" alt="Ponniyin Selvan"><p>Ponniyin Selvan</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="jaibhim.png" alt="Jai Bhim"><p>Jai Bhim</p></div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Malayalam Movies</h3>
+            <div class="movies">
+                <div class="movie" onclick="bookSeats()"><img src="dhrishyam2.png" alt="Drishyam 2"><p>Drishyam 2</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="premam.png" alt="Premam"><p>Premam</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="bangloredays.png" alt="Bangalore Days"><p>Bangalore Days</p></div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Hindi Movies</h3>
+            <div class="movies">
+                <div class="movie" onclick="bookSeats()"><img src="pathaan.png" alt="Pathaan"><p>Pathaan</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="bhrahmastra.png" alt="Brahmāstra"><p>Brahmāstra</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="dangal.png" alt="Dangal"><p>Dangal</p></div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Hollywood Movies</h3>
+            <div class="movies">
+                <div class="movie" onclick="bookSeats()"><img src="avatar.png" alt="Avatar: The Way of Water"><p>Avatar 2</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="topgun.png" alt="Top Gun: Maverick"><p>Top Gun 2</p></div>
+                <div class="movie" onclick="bookSeats()"><img src="avengers.png" alt="Avengers: Endgame"><p>Avengers</p></div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Book Your Favorite Movies Now!</h2>
+            <p>Enjoy the latest blockbusters in stunning high-definition and immersive sound. Our booking system is quick and easy, allowing you to reserve your seats in advance and skip the long queues. Experience the magic of cinema with just a few clicks!</p>
+        </div>
+        
+        <div class="review-section">
+            <h2>Celebrity Reviews</h2>
+            <div class="reviews">
+                <div class="review"><img src="allu.png" alt="Allu Arjun"><span>Allu Arjun</span><p>Masterpiece!</p></div>
+                <div class="review"><img src="prabhas.png" alt="Prabhas"><span>Prabhas</span><p>Thrilling!</p></div>
+                <div class="review"><img src="srk.png" alt="Scar"><span>SRK</span><p>Brilliant!</p></div>
+                <div class="review"><img src="karthik.png" alt="karthik"><span>Karthik</span><p>Action-packed!</p></div>
+                <div class="review"><img src="vijay.png" alt="vijay"><span>Thalapathi</span><p>Inspiring!</p></div>
+                <div class="review"><img src="dq.png" alt="dq"><span>DQ</span><p>Hilarious!</p></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

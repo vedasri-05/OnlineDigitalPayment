@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge or Pay Mobile Bill</title>
+    <link rel="stylesheet" href="recharge.css">
+    <style>
+       
+       /* Plan button styles */
+        .plan-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #051638;
+            background-color: #e0e0e0;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .plan-button:hover, .plan-button.selected {
+            background-color: #8357ce;
+            color: white;
+            border-color: #5a39a5;
+        }
+        /* Operator icons */
+        .operator-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .operator-links a {
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+
+        }
+        /* Error Message Styling */
+/* Error Message Styling */
+.error-message {
+    color: #f44336; /* Red color for error text */
+    font-size: 0.9em; /* Smaller font size for error message */
+    margin-top: 5px; /* Space above the error message */
+    padding-left: 5px; /* Space on the left side of the message */
+    display: none; /* Hide the error message initially */
+}
+
+/* Error Input Border Styling */
+.error-input {
+    border-color: #f44336; /* Red border when there's an error */
+}
+
+/* Error message will be displayed when needed */
+input.error-input + .error-message {
+    display: block; /* Show error message */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <img src="logo.png" alt="Main Logo" class="main-logo">
+            <h1>Recharge or Pay Mobile Bill</h1>
+        </div>
+        <form id="myForm">
+            <label>Mobile Number:</label>
+            <input type="tel" id="mobile-number" placeholder="Enter mobile number">
+            <div id="mobile-error" class="error-message"></div>
+
+            <label>Operator:</label>
+            <select id="operator" onchange="showPlans()">
+                <option value="">Select an Operator</option>
+                <option value="Jio">Jio</option>
+                <option value="VI">VI</option>
+                <option value="Airtel">Airtel</option>
+                <option value="BSNL">BSNL</option>
+                <option value="MTNL">MTNL</option>
+            </select>
+            <div id="operator-error" class="error-message"></div>
+
+            <div id="plans"></div>
+            <div id="plan-error" class="error-message"></div>
+
+            <button type="submit" class="block-link">Proceed to Payment</button>
+        </form>
+
+        <!-- Operator Logos Below Submit Button -->
+        <div class="operator-links">
+            <a href="https://www.airtel.in"><img class="circle" src="airtel.png" alt="Airtel">Airtel</a>
+            <a href="https://www.bsnl.co.in"><img class="circle" src="bsnl.png" alt="BSNL">BSNL</a>
+            <a href="https://www.jio.com"><img class="circle" src="jio.png" alt="Jio">Jio</a>
+            <a href="https://www.mtnl.in"><img class="circle" src="mtnl.png" alt="MTNL">MTNL</a>
+            <a href="https://www.vi.in"><img class="circle" src="vi.png" alt="Vi">Vi</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedPlan = ""; 
+
+        function showPlans() {
+            const operator = document.getElementById("operator").value;
+            const plansDiv = document.getElementById("plans");
+            plansDiv.innerHTML = "";
+            selectedPlan = ""; 
+
+            if (operator) {
+                let plans = [];
+                if (operator === "Jio") {
+                    plans = ["₹199 - 1GB/day", "₹399 - 1.5GB/day", "₹599 - 2GB/day"];
+                } else if (operator === "VI") {
+                    plans = ["₹249 - 1.5GB/day", "₹499 - 2GB/day", "₹799 - 3GB/day"];
+                } else if (operator === "Airtel") {
+                    plans = ["₹199 - 1GB/day", "₹399 - 1.5GB/day", "₹599 - 2GB/day"];
+                } else if (operator === "BSNL") {
+                    plans = ["₹249 - 1GB/day", "₹499 - 2GB/day", "₹799 - 3GB/day"];
+                } else if (operator === "MTNL") {
+                    plans = ["₹199 - 1GB/day", "₹399 - 1.5GB/day", "₹599 - 2GB/day"];
+                }
+
+                plans.forEach(plan => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "plan-button";
+                    button.innerText = plan;
+                    button.onclick = () => selectPlan(button, plan);
+                    plansDiv.appendChild(button);
+                });
+
+                plansDiv.style.display = "block";
+            } else {
+                plansDiv.style.display = "none";
+            }
+        }
+
+        function selectPlan(button, plan) {
+            document.querySelectorAll(".plan-button").forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            selectedPlan = plan;
+        }
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let valid = true;
+            let mobileNumber = document.getElementById("mobile-number").value;
+            let operator = document.getElementById("operator").value;
+
+            document.getElementById("mobile-error").innerText = "";
+            document.getElementById("operator-error").innerText = "";
+            document.getElementById("plan-error").innerText = "";
+            document.getElementById("mobile-number").classList.remove("error-input");
+            document.getElementById("operator").classList.remove("error-input");
+
+            if (!mobileNumber || !/^\d{10}$/.test(mobileNumber)) {
+                document.getElementById("mobile-error").innerText = "Please enter a valid 10-digit mobile number.";
+                document.getElementById("mobile-number").classList.add("error-input");
+                valid = false;
+            }
+
+            if (!operator) {
+                document.getElementById("operator-error").innerText = "Please select an operator.";
+                document.getElementById("operator").classList.add("error-input");
+                valid = false;
+            }
+
+            if (!selectedPlan) {
+                document.getElementById("plan-error").innerText = "Please select a plan.";
+                valid = false;
+            }
+
+            if (valid) {
+                localStorage.setItem("mobileNumber", mobileNumber);
+                localStorage.setItem("selectedPlan", selectedPlan);
+                window.location.href = "payment.html";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="signin.css" />
+    <title>Sign in & Sign up Form</title>
+    <style>
+        .input-field {
+            position: relative;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-label {
+            font-size: 14px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-label i {
+            color: #555;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            height: 15px;
+            display: block;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <!-- Sign In Form -->
+                <form class="sign-in-form" onsubmit="validateSignIn(event)">
+                    <h2 class="title">Login</h2>
+                    <div class="input-field">
+                        <label class="input-label" for="signin-username"><i class="fas fa-user"></i> 👤 Username</label>
+                        <input type="text" id="signin-username" placeholder="Username">
+                        <small class="error-message" id="signin-username-error"></small>
+                    </div>
+                    <div class="input-field">
+                        <label class="input-label" for="signin-password"><i class="fas fa-lock"></i>🔒 Password</label>
+                        <input type="password" id="signin-password" placeholder="Password">
+                        <small class="error-message" id="signin-password-error"></small>
+                    </div>
+                    <input type="submit" value="Login" class="btn solid" /><br><br>
+                    <h3 style="color: #0e0f0f;">Or login with Social Platforms</h3>
+                    <div class="social-media">
+                        <a href="https://www.facebook.com" class="social-icon"><img src="facebooklogo.avif" alt="Facebook" style="height:60px; width:60px;"></a>
+                        <a href="https://twitter.com" class="social-icon"><img src="twitter.png" alt="Twitter" style="height:60px; width:60px;"></a>
+                        <a href="https://accounts.google.com" class="social-icon"><img src="googlelogo.webp" alt="Google" style="height:60px; width:60px;"></a>
+                        <a href="https://www.linkedin.com" class="social-icon"><img src="linkdinlogo.avif" alt="LinkedIn" style="height:60px; width:60px;"></a>
+                    </div>
+                </form>
+
+                <!-- Sign Up Form -->
+                <form class="sign-up-form" onsubmit="validateSignUp(event)">
+                    <h2 class="title">Sign up</h2>
+                    <div class="input-field">
+                        <label class="input-label" for="signup-username"><i class="fas fa-user"></i> 👤 Username</label>
+                        <input type="text" id="signup-username" placeholder="Username">
+                        <small id="signup-username-error" class="error-message"></small>
+                    </div>
+                    <div class="input-field">
+                        <label class="input-label" for="signup-email"><i class="fas fa-envelope"></i> 📧 Email</label>
+                        <input type="email" id="signup-email" placeholder="Email">
+                        <small id="signup-email-error" class="error-message"></small>
+                    </div>
+                    <div class="input-field">
+                        <label class="input-label" for="signup-password"><i class="fas fa-lock"></i> 🔒 Password</label>
+                        <input type="password" id="signup-password" placeholder="Password">
+                        <small id="signup-password-error" class="error-message"></small>
+                    </div>
+                    <input type="submit" class="btn" value="Sign up" />
+                </form>
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h2 style="color: #e4e4eb;">SSG PAYMENT'S</h2>
+                    <p style="color: #0e0f0f;">Sign up to Make payments</p>
+                    <button class="btn transparent" id="sign-up-btn">Sign up</button>
+                </div>
+                <img src="Logo.png" class="image" alt="SSG Logo" />
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h2 style="color: #d9ecf3;">SSG INTERFACE LOGIN</h2>
+                    <p style="color: #303dcc;">Sign in to Make payments</p>
+                    <button class="btn transparent" id="sign-in-btn">Sign in</button>
+                </div>
+                <img src="Logo.png" class="image" alt="SSG Logo" />
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT START -->
+    <script>
+        const STORAGE_KEYS = {
+            USERS: 'users',
+            CURRENT_USER: 'currentUser'
+        };
+
+        const getUsers = () => JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+        const saveUsers = users => localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+        const getUser = username => getUsers().find(user => user.username === username);
+        const userExists = username => !!getUser(username);
+
+        const registerUser = (username, email, password) => {
+            const users = getUsers();
+            users.push({ username, email, password });
+            saveUsers(users);
+        };
+
+        const validateUser = (username, password) => {
+            const user = getUser(username);
+            return user && user.password === password;
+        };
+
+        const clearErrors = () => {
+            document.querySelectorAll('.error-message').forEach(e => e.textContent = '');
+        };
+
+        const clearInputs = form => {
+            form.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]').forEach(input => input.value = '');
+        };
+
+        function validateSignUp(event) {
+            event.preventDefault();
+            clearErrors();
+
+            const username = document.getElementById('signup-username').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            let valid = true;
+
+            if (!username) {
+                document.getElementById('signup-username-error').textContent = 'Username is required';
+                valid = false;
+            } else if (userExists(username)) {
+                document.getElementById('signup-username-error').textContent = 'Username already exists';
+                valid = false;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('signup-email-error').textContent = 'Invalid email format';
+                valid = false;
+            }
+
+            if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
+                document.getElementById('signup-password-error').textContent =
+                    'Password must be 8+ chars, include uppercase, lowercase, number, and special char';
+                valid = false;
+            }
+
+            if (valid) {
+                registerUser(username, email, password);
+                alert('Registration successful! You can now log in.');
+                clearInputs(event.target);
+
+                // FIX: Smooth transition and allow login interaction
+                setTimeout(() => {
+                    document.querySelector(".container").classList.remove("sign-up-mode");
+                    document.getElementById("signin-username").focus();
+                }, 300);
+            }
+        }
+
+        function validateSignIn(event) {
+            event.preventDefault();
+            clearErrors();
+
+            const username = document.getElementById('signin-username').value.trim();
+            const password = document.getElementById('signin-password').value.trim();
+            let valid = true;
+
+            if (!username) {
+                document.getElementById('signin-username-error').textContent = 'Username is required';
+                valid = false;
+            } else if (!userExists(username)) {
+                document.getElementById('signin-username-error').textContent = 'User not found. Please sign up.';
+                valid = false;
+            } else if (!validateUser(username, password)) {
+                document.getElementById('signin-password-error').textContent = 'Incorrect password';
+                valid = false;
+            }
+
+            if (valid) {
+                localStorage.setItem(STORAGE_KEYS.CURRENT_USER, username);
+                alert('Login successful!');
+                window.location.href = 'home.html';
+            }
+        }
+
+        document.querySelector("#sign-up-btn").addEventListener("click", () => {
+            document.querySelector(".container").classList.add("sign-up-mode");
+        });
+
+        document.querySelector("#sign-in-btn").addEventListener("click", () => {
+            document.querySelector(".container").classList.remove("sign-up-mode");
+        });
+    </script>
+    <!-- SCRIPT END -->
+</body>
+
+</html>

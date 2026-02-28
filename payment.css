@@ -1,0 +1,169 @@
+
+        /* Modern Color Palette */
+        :root {
+            --primary: #030924;
+            --secondary: #574bb1;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --border: #dfe6e9;
+        }
+
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6d7dc4 0%, #b499cf 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .payment-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(5px);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 10px auto 0;
+            border-radius: 3px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+            outline: none;
+        }
+
+        .error {
+            border-color: var(--danger) !important;
+        }
+
+        .valid {
+            border-color: var(--success) !important;
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .card-fields, .wallet-fields {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: var(--danger);
+            color: white;
+            display: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e53935;
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 25px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .payment-container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    

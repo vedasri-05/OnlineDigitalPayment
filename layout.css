@@ -1,0 +1,105 @@
+/* Resetting default margin and padding */
+body, h2, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Add CSS styles for header */
+header {
+    background-color: #0e75b1; /* Dark gray */
+    padding: 10px 0;
+    border-radius: 10px; /* Add curved borders */
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle; /* Align items vertically */
+}
+
+nav ul li:last-child {
+    margin-right: 0; /* Remove margin from the last item */
+}
+
+nav ul li a img {
+    width: 250px; /* Adjust logo width */
+    height: auto; /* Maintain aspect ratio */
+    vertical-align: middle; /* Align vertically */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white; /* Text color */
+    font-size: 20px; /* Adjust font size */
+    vertical-align: middle; /* Align vertically */
+}
+
+nav ul li:last-child {
+    background-color: #4CAF50; /* Green for sign-in button */
+    padding: 10px 20px; /* Adjust padding */
+    border-radius: 10px; /* Rounded corners */
+}
+
+nav ul li:last-child a {
+    color: white; /* Text color */
+}
+
+/* Add CSS styles for main content */
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h2 {
+    color: #f5f9fa; /* Dark gray */
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin-right: 35px; /* Adjust spacing between items */
+    color: white; /* Text color */
+}
+
+/* Add background colors for sections */
+section:nth-child(1) {
+    background-color: #349cd8; /* Light gray */
+    height: 200px; /* Smaller height */
+}
+
+section:nth-child(2),
+section:nth-child(3) {
+    background-color: #2362bb; /* Lighter gray */
+    height: 200px; /* Same height */
+}
+
+section:nth-child(4) {
+    background-color: #0f50d2; /* Light gray */
+    height: 350px; /* Smaller height */
+}
+
+/* Set fixed width for images in the second and third rows */
+section:nth-child(2) ul li img,
+section:nth-child(3) ul li img {
+    width: 150px;
+}
+
+/* Add space between images horizontally */
+section ul li img {
+    margin-right: 10px; /* Adjust spacing between images */
+}

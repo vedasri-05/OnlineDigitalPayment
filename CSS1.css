@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.background {
+  background-image: url('background1.jpg'); /* Change 'background.jpg' to the path of your background image */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.8); /* Adding transparency to the background color */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+select:disabled {
+  background-color: #f2f2f2;
+}

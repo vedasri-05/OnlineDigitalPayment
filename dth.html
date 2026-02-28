@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge or Pay Mobile Bill</title>
+    <link rel="stylesheet" href="recharge.css">
+    <style>
+        /* Plan button styles */
+        .plan-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #051638;
+            background-color: #e0e0e0;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .plan-button:hover, .plan-button.selected {
+            background-color: #8357ce;
+            color: white;
+            border-color: #5a39a5;
+        }
+        /* Centered container for the form */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        /* Operator icons */
+        .operator-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .operator-links a {
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        /* Error Message Styling */
+        .error-message {
+            color: #f44336; /* Red color for error text */
+            font-size: 0.9em; /* Smaller font size for error message */
+            margin-top: 5px; /* Space above the error message */
+            padding-left: 5px; /* Space on the left side of the message */
+            display: none; /* Hide the error message initially */
+        }
+        /* Error Input Border Styling */
+        .error-input {
+            border-color: #f44336; /* Red border when there's an error */
+        }
+        /* Error message will be displayed when needed */
+        input.error-input + .error-message {
+            display: block; /* Show error message */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <img src="logo.png" alt="Main Logo" class="main-logo">
+            <h1>Recharge or Pay Mobile Bill</h1>
+        </div>
+        <div class="form-container">
+            <form id="myForm">
+                <label>SERVICE NUMBER (R.M.N):</label>
+                <input type="tel" id="mobile-number" placeholder="Enter mobile number" required>
+                <br><br>
+                <label>Operator:</label>
+                <select id="operator" onchange="showPlans()" required>
+                    <option value="">Select an Operator</option>
+                    <option value="Dishtv">Dishtv</option>
+                    <option value="TATA PLAY">TATA PLAY</option>
+                    <option value="airtel">Airtel</option>
+                    <option value="Sun Direct">Sun Direct</option>
+                    <option value="Vediocon D2H">Vediocon D2H</option>
+                </select>
+                <br><br>
+                <div id="plans" style="display: none;">
+                    <!-- Plan buttons will be injected here -->
+                </div>
+                <div class="block-link" id="proceed-link" style="display: none; text-align: center;">
+                    <a href="payment.html" id="proceed-to-recharge">Proceed to Recharge</a>
+                </div>
+                <div class="error-message" id="mobile-error"></div>
+                <div class="error-message" id="operator-error"></div>
+                <div class="error-message" id="plan-error"></div>
+            </form>
+        </div>
+
+        <div class="operator-links">
+            <a href="https://www.tatasky.com" id="tata-play"><img src="tataplay.png" alt="Tata Play Logo"> Tata Play Recharge</a>
+            <a href="https://www.airtel.in" id="airtel"><img src="airteldish.png" alt="Airtel Logo"> Airtel Recharge</a>
+            <a href="https://www.dishtv.in" id="dishtv"><img src="dishtv.png" alt="DishTV Logo"> DishTV Recharge</a>
+            <a href="https://www.sundirect.in" id="sundirect"><img src="sundirect.png" alt="Sun Direct Logo"> Sun Direct Recharge</a>
+            <a href="https://www.vedi.com" id="vediocon-d2h"><img src="d2h.png" alt="D2H Logo"> Vediocon D2H Recharge</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedPlan = ""; 
+
+        // Function to display plans based on selected operator
+        function showPlans() {
+            const operator = document.getElementById("operator").value;
+            const plansDiv = document.getElementById("plans");
+            plansDiv.innerHTML = "";
+            selectedPlan = ""; 
+            document.getElementById("proceed-link").style.display = "none"; // Hide proceed button initially
+
+            if (operator) {
+                let plans = [];
+                if (operator === "Dishtv") {
+                    plans = ["₹199 - 1GB/day", "₹399 - 1.5GB/day", "₹599 - 2GB/day"];
+                } else if (operator === "TATA PLAY") {
+                    plans = ["₹249 - 1GB/day", "₹499 - 1.5GB/day", "₹799 - 2GB/day"];
+                } else if (operator === "airtel") {
+                    plans = ["₹199 - 1GB/day", "₹399 - 1.5GB/day", "₹599 - 2GB/day"];
+                } else if (operator === "Sun Direct") {
+                    plans = ["₹249 - 1GB/day", "₹499 - 2GB/day", "₹799 - 3GB/day"];
+                } else if (operator === "Vediocon D2H") {
+                    plans = ["₹199 - 1GB/day", "₹399 - 1.5GB/day", "₹599 - 2GB/day"];
+                }
+
+                plans.forEach(plan => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "plan-button";
+                    button.innerText = plan;
+                    button.onclick = () => selectPlan(button, plan);
+                    plansDiv.appendChild(button);
+                });
+
+                plansDiv.style.display = "block";
+            } else {
+                plansDiv.style.display = "none";
+            }
+            checkFormValidity();  // Check form validity every time operator changes
+        }
+
+        // Function to select a plan
+        function selectPlan(button, plan) {
+            document.querySelectorAll(".plan-button").forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            selectedPlan = plan;
+            checkFormValidity();  // Check form validity after selecting a plan
+        }
+
+        // Function to check the validity of the form and show Proceed button
+        function checkFormValidity() {
+            const mobileNumber = document.getElementById("mobile-number").value;
+            const operator = document.getElementById("operator").value;
+
+            const mobileValid = /^\d{10}$/.test(mobileNumber);
+            const operatorValid = operator !== "";
+            const planValid = selectedPlan !== "";
+
+            // Show proceed button if all fields are valid
+            if (mobileValid && operatorValid && planValid) {
+                document.getElementById("proceed-link").style.display = "block";
+            } else {
+                document.getElementById("proceed-link").style.display = "none";
+            }
+
+            // Update error messages
+            document.getElementById("mobile-error").style.display = mobileValid ? "none" : "block";
+            document.getElementById("operator-error").style.display = operatorValid ? "none" : "block";
+            document.getElementById("plan-error").style.display = planValid ? "none" : "block";
+        }
+
+        // Form submit validation
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let valid = true;
+            let mobileNumber = document.getElementById("mobile-number").value;
+            let operator = document.getElementById("operator").value;
+
+            document.getElementById("mobile-error").innerText = "";
+            document.getElementById("operator-error").innerText = "";
+            document.getElementById("plan-error").innerText = "";
+            document.getElementById("mobile-number").classList.remove("error-input");
+            document.getElementById("operator").classList.remove("error-input");
+
+            // Mobile number validation
+            if (!mobileNumber || !/^\d{10}$/.test(mobileNumber)) {
+                document.getElementById("mobile-error").innerText = "Please enter a valid 10-digit mobile number.";
+                document.getElementById("mobile-number").classList.add("error-input");
+                valid = false;
+            }
+
+            // Operator selection validation
+            if (!operator) {
+                document.getElementById("operator-error").innerText = "Please select an operator.";
+                document.getElementById("operator").classList.add("error-input");
+                valid = false;
+            }
+
+            // Plan selection validation
+            if (!selectedPlan) {
+                document.getElementById("plan-error").innerText = "Please select a plan.";
+                valid = false;
+            }
+
+            // Proceed if valid
+            if (valid) {
+                localStorage.setItem("mobileNumber", mobileNumber);
+                localStorage.setItem("selectedPlan", selectedPlan);
+                window.location.href = "payment.html";
+            }
+        });
+    </script>
+</body>
+</html>

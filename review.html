@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #2c3e50;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            color: #2980b9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+
+        /* Review Section Styling */
+        .reviews-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .reviews-section h2 {
+            font-size: 30px;
+            color: #e74c3c;
+            border-bottom: 3px solid #e74c3c;
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Review Cards Styling */
+        .review-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .review-card {
+            background-color: #ecf0f1;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-card h3 {
+            font-size: 24px;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        .review-card p {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .review-card .rating {
+            font-size: 18px;
+            color: #f39c12;
+        }
+
+        .review-card .author {
+            font-size: 14px;
+            color: #95a5a6;
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 30px;
+            }
+
+            .review-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .review-card {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Customer Reviews</h1>
+            <p>See what our customers have to say about our service</p>
+        </div>
+
+        <div class="reviews-section">
+            <h2>What Our Customers Are Saying</h2>
+        </div>
+
+        <div class="review-cards">
+            <div class="review-card">
+                <h3>Great Service!</h3>
+                <p>The service is fantastic! I was able to pay my electricity bill in just a few clicks. Highly recommend it!</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <div class="author">- John Doe</div>
+            </div>
+
+            <div class="review-card">
+                <h3>Fast and Secure</h3>
+                <p>I've never had any issues with this payment platform. It's always fast and secure. Love it!</p>
+                <div class="rating">⭐⭐⭐⭐</div>
+                <div class="author">- Jane Smith</div>
+            </div>
+
+            <div class="review-card">
+                <h3>Convenient and Easy</h3>
+                <p>It was so convenient to pay my electricity bill without any hassle. Simple interface and reliable.</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <div class="author">- Mike Lee</div>
+            </div>
+
+            <div class="review-card">
+                <h3>Highly Satisfied</h3>
+                <p>I love the user-friendly interface. No complicated steps, just quick and easy payment. Keep up the good work!</p>
+                <div class="rating">⭐⭐⭐⭐</div>
+                <div class="author">- Sarah Williams</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
